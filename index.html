@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SpamShield</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <header class="site-header">
+    <h1 class="site-title">SpamShield</h1>
+    <p class="site-slogan">Protégez votre boîte mail avec l’intelligence artificielle</p>
+  </header>
+
+  <div class="container">
+    <h3>Analysez votre message pour détecter s’il s’agit d’un spam ou non.</h3>
+    <textarea id="message" rows="10" placeholder="Collez ici le contenu de votre email..."></textarea>
+    <button onclick="checkSpam()">Analyser</button>
+
+    <div class="result" id="resultBox" style="display: none;">
+      <div class="result-left">
+        <h2 id="resultTitle">Résultat de l'analyse</h2>
+        <p id="resultText"></p>
+      </div>
+      <div class="circle-group">
+        <div class="circle-container">
+          <svg class="progress-ring" width="140" height="140">
+            <circle class="progress-ring__circle" stroke="#0078d7" stroke-width="10" fill="transparent" r="65" cx="70"
+              cy="70" />
+          </svg>
+          <div class="percentage-text" id="percentText">--%</div>
+        </div>
+        <p class="confidence-label">Score de confiance</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
