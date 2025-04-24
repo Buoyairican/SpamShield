@@ -21,7 +21,7 @@ async function checkSpam() {
     resultText.classList.add("text-green");
     updateProgress(resultHam * 100); // % of being ham
   } else {
-    resultText.textContent = "Erreur lors de la prédiction.";
+    resultText.textContent = "Erreur lors de la prédiction."+resultPrediction;
     resultBox.classList.add("result-orange");
     resultText.classList.add("text-orange");
     updateProgress(0);
