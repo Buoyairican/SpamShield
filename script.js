@@ -14,12 +14,12 @@ async function checkSpam() {
     resultText.textContent = "Cet email est probablement un SPAM.";
     resultBox.classList.add("result-red");
     resultText.classList.add("text-red");
-    updateProgress(resultSpam * 100); // % of being spam
+    updateProgress(resultSpam * 100,1); // % of being spam
   } else if (resultPrediction === 0) {
     resultText.textContent = "Cet email semble légitime.";
     resultBox.classList.add("result-green");
     resultText.classList.add("text-green");
-    updateProgress(resultHam * 100); // % of being ham
+    updateProgress(resultHam * 100,0); // % of being ham
   } else {
     resultText.textContent = "Erreur lors de la prédiction."+resultPrediction;
     resultBox.classList.add("result-orange");
