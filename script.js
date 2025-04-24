@@ -44,13 +44,7 @@ function updateProgress(percent) {
 
   circle.classList.remove("circle-green", "circle-red", "circle-orange");
 
-  if (percent >= 90) {
-    circle.classList.add("circle-green");
-  } else if (percent >= 70) {
-    circle.classList.add("circle-orange");
-  } else {
-    circle.classList.add("circle-red");
-  }
+  circle.classList.add("circle-blue");
 }
 
 async function getPrediction(text) {
