@@ -10,31 +10,21 @@ async function checkSpam() {
 //summilate the spam score based on keywords
 
 
-var { prediction: resultPrediction, probability: resultProbability } = await getPrediction(message);
+var { prediction: resultPrediction, probabilityHam: resultHam, probabilitySpam: resultSpam } = await getPrediction(message);
 
-
-
-  if (resultPrediction == 1) {
-    resultText.textContent = "❌ Cet email est probablement un SPAM.";
-    resultBox.classList.add("result-red");
-    resultText.classList.add("text-red");
-
-  // } else if (message.includes("urgent") || message.includes("offre") || message.length < 30) {
-  //   scoreValue = 75;
-  //   resultText.textContent = "⚠️ Ce message pourrait être un spam.";
-  //   resultBox.classList.add("result-orange");
-  //   resultText.classList.add("text-orange");
-
-  } else {
-    resultProbability = 1 - resultProbability;
-    resultText.textContent = "✅ Cet email semble légitime.";
-    resultBox.classList.add("result-green");
-    resultText.classList.add("text-green");
-  }
-
-  updateProgress(resultProbability*100);
-  resultBox.style.display = "flex";
+if (resultPrediction == 1) {
+  resultText.textContent = "Cet email est probablement un SPAM.";
+  resultBox.classList.add("result-red");
+  resultText.classList.add("text-red");
+  updateProgress(resultSpam * 100); // Use spam probability for the progress bar
+} else {
+  resultText.textContent = "Cet email semble légitime.";
+  resultBox.classList.add("result-green");
+  resultText.classList.add("text-green");
+  updateProgress(resultHam * 100); // Use ham probability
 }
+
+resultBox.style.display = "flex";
 
 function updateProgress(percent) {
   const circle = document.querySelector('.progress-ring__circle');
@@ -67,7 +57,7 @@ async function getPrediction(text) {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ text })
+      body: JSON.stringify({ text })  // sending { text: "..." }
     });
 
     if (!response.ok) {
@@ -75,18 +65,19 @@ async function getPrediction(text) {
     }
 
     const result = await response.json();
-    
-    
+
     return {
-      prediction: result.prediction,        // 0 or 1
-      probability: result.probability       // between 0 and 1
+      prediction: result.prediction,               // 0 or 1
+      probabilityHam: result.probabilities.ham,    // e.g., 0.1234
+      probabilitySpam: result.probabilities.spam   // e.g., 0.8766
     };
 
   } catch (error) {
     console.error("Prediction error:", error);
     return {
       prediction: -1,
-      probability: 0.0
+      probabilityHam: 0.0,
+      probabilitySpam: 0.0
     };
   }
 }
