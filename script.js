@@ -11,12 +11,12 @@ async function checkSpam() {
   const { prediction: resultPrediction, probabilityHam: resultHam, probabilitySpam: resultSpam } = await getPrediction(message);
 
   if (resultPrediction === 1) {
-    resultText.textContent = "❌ Cet email est probablement un SPAM.";
+    resultText.textContent = "Cet email est probablement un SPAM.";
     resultBox.classList.add("result-red");
     resultText.classList.add("text-red");
     updateProgress(resultSpam * 100); // % of being spam
   } else if (resultPrediction === 0) {
-    resultText.textContent = "✅ Cet email semble légitime.";
+    resultText.textContent = "Cet email semble légitime.";
     resultBox.classList.add("result-green");
     resultText.classList.add("text-green");
     updateProgress(resultHam * 100); // % of being ham
@@ -40,7 +40,7 @@ function updateProgress(percent) {
   const offset = circumference - (percent / 100) * circumference;
 
   circle.style.strokeDashoffset = offset;
-  percentText.textContent = percent + "%";
+  percentText.textContent = percent.toFixed(2) + "%";
 
   circle.classList.remove("circle-green", "circle-red", "circle-orange");
 
