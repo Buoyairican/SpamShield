@@ -31,7 +31,7 @@ async function checkSpam() {
 }
 
 
-function updateProgress(percent) {
+function updateProgress(percent,resultPrediction) {
   const circle = document.querySelector('.progress-ring__circle');
   const percentText = document.getElementById('percentText');
 
@@ -44,7 +44,11 @@ function updateProgress(percent) {
 
   circle.classList.remove("circle-green", "circle-red", "circle-orange");
 
-  circle.classList.add("circle-blue");
+  if (resultPrediction === 1) {
+    circle.classList.add("circle-red"); 
+  } else {
+    circle.classList.add("circle-green"); 
+  }
 }
 
 async function getPrediction(text) {
