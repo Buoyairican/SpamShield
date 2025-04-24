@@ -42,7 +42,7 @@ function updateProgress(percent,resultPrediction) {
   circle.style.strokeDashoffset = offset;
   percentText.textContent = percent.toFixed(2) + "%";
 
-  circle.classList.remove("circle-green", "circle-red", "circle-orange");
+  circle.classList.remove("circle-green", "circle-red","circle-blue");
 
   if (resultPrediction === 1) {
     circle.classList.add("circle-red"); 
