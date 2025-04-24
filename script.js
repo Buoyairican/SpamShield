@@ -3,28 +3,33 @@ async function checkSpam() {
   const resultBox = document.getElementById("resultBox");
   const resultText = document.getElementById("resultText");
 
-  let scoreValue = 0;
+  // Reset styles
   resultBox.classList.remove("result-green", "result-orange", "result-red");
   resultText.classList.remove("text-green", "text-orange", "text-red");
 
-//summilate the spam score based on keywords
+  // Get prediction from the API
+  const { prediction: resultPrediction, probabilityHam: resultHam, probabilitySpam: resultSpam } = await getPrediction(message);
 
+  if (resultPrediction === 1) {
+    resultText.textContent = "❌ Cet email est probablement un SPAM.";
+    resultBox.classList.add("result-red");
+    resultText.classList.add("text-red");
+    updateProgress(resultSpam * 100); // % of being spam
+  } else if (resultPrediction === 0) {
+    resultText.textContent = "✅ Cet email semble légitime.";
+    resultBox.classList.add("result-green");
+    resultText.classList.add("text-green");
+    updateProgress(resultHam * 100); // % of being ham
+  } else {
+    resultText.textContent = "Erreur lors de la prédiction.";
+    resultBox.classList.add("result-orange");
+    resultText.classList.add("text-orange");
+    updateProgress(0);
+  }
 
-var { prediction: resultPrediction, probabilityHam: resultHam, probabilitySpam: resultSpam } = await getPrediction(message);
-
-if (resultPrediction == 1) {
-  resultText.textContent = "Cet email est probablement un SPAM.";
-  resultBox.classList.add("result-red");
-  resultText.classList.add("text-red");
-  updateProgress(resultSpam * 100); // Use spam probability for the progress bar
-} else {
-  resultText.textContent = "Cet email semble légitime.";
-  resultBox.classList.add("result-green");
-  resultText.classList.add("text-green");
-  updateProgress(resultHam * 100); // Use ham probability
+  resultBox.style.display = "flex";
 }
 
-resultBox.style.display = "flex";
 
 function updateProgress(percent) {
   const circle = document.querySelector('.progress-ring__circle');
