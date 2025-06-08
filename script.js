@@ -52,7 +52,7 @@ function updateProgress(percent,resultPrediction) {
 }
 
 async function getPrediction(text) {
-  const url = "https://modelsvm-production.up.railway.app/predict";
+  const url = "https://selective-mirna-buoyairican-f199f93d.koyeb.app/predict";
 
   try {
     const response = await fetch(url, {
